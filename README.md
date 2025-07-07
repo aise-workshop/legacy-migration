@@ -15,3 +15,30 @@ Todos:
 2. SASS 迁移，结合 sass-migrator: https://sass-lang.com/documentation/breaking-changes/import/
 3. Webpack 4 to 5: https://webpack.js.org/migrate/5/
 4. 三方组件兼容层设计
+
+```mermaid
+flowchart TD
+    A[Vue SFC File] --> B1[Parse Template Block]
+    A --> B2[Parse Script Block]
+    A --> B3[Parse Style Block]
+
+    B1 --> T1[Template AST]
+    T1 --> T2[Element Node: div]
+    T2 --> T3[Attribute: class=msg]
+    T2 --> T4[Interpolation: message]
+
+    B2 --> S1[Script AST]
+    S1 --> S2[Export Default Declaration]
+    S2 --> S3[data method]
+    S3 --> S4[Return: message Hello World]
+
+    B3 --> C1[Style AST]
+    C1 --> C2[Rule: .msg]
+    C2 --> C3[Declaration: color = red]
+
+    T1 --> M1[Generate Render Function]
+    S1 --> M1
+    M1 --> M2[Component Definition]
+
+    C1 --> M3[Inject Scoped Style]
+```
